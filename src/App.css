@@ -8,8 +8,8 @@
 .chooser-shell {
   width: min(960px, 100%);
   display: grid;
-  gap: 22px;
-  padding: clamp(28px, 5vw, 52px);
+  gap: 18px;
+  padding: clamp(22px, 4vw, 42px);
   border: 1px solid rgba(241, 216, 225, 0.88);
   border-radius: 40px;
   background: rgba(255, 251, 253, 0.78);
@@ -22,7 +22,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
+  gap: 12px;
 }
 
 .chooser-brand-copy {
@@ -33,7 +33,7 @@
 
 .chooser-handle {
   color: var(--text-strong);
-  font-size: 1.2rem;
+  font-size: 1.05rem;
   font-weight: 600;
 }
 
@@ -47,14 +47,14 @@
 .chooser-title {
   max-width: 10ch;
   margin: 0 auto;
-  font-size: clamp(3rem, 8vw, 6rem);
+  font-size: clamp(2.5rem, 6vw, 5rem);
   line-height: 0.92;
 }
 
 .chooser-copy {
   max-width: 42rem;
   margin: 0 auto;
-  font-size: clamp(1rem, 1.6vw, 1.2rem);
+  font-size: clamp(0.96rem, 1.4vw, 1.08rem);
 }
 
 .chooser-grid {
@@ -66,8 +66,8 @@
 .chooser-card {
   display: grid;
   justify-items: center;
-  gap: 16px;
-  padding: 28px;
+  gap: 12px;
+  padding: 20px;
   border: 1px solid rgba(232, 194, 208, 0.9);
   border-radius: 30px;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 243, 248, 0.88));
@@ -85,7 +85,7 @@
 }
 
 .chooser-card strong {
-  font-size: 1.4rem;
+  font-size: 1.18rem;
 }
 
 .chooser-card span:last-child {
@@ -101,9 +101,9 @@
 }
 
 .desktop-icon {
-  width: 120px;
-  height: 78px;
-  border-radius: 18px;
+  width: 94px;
+  height: 60px;
+  border-radius: 15px;
 }
 
 .desktop-icon::after {
@@ -111,17 +111,17 @@
   position: absolute;
   left: 50%;
   bottom: -18px;
-  width: 42px;
-  height: 10px;
+  width: 34px;
+  height: 8px;
   border-radius: 999px;
   background: rgba(208, 131, 162, 0.35);
   transform: translateX(-50%);
 }
 
 .mobile-icon {
-  width: 58px;
-  height: 96px;
-  border-radius: 18px;
+  width: 44px;
+  height: 76px;
+  border-radius: 14px;
 }
 
 .app-shell {
@@ -176,8 +176,8 @@
 }
 
 .brand-avatar.large {
-  width: 72px;
-  height: 72px;
+  width: 58px;
+  height: 58px;
 }
 
 .brand-kicker {
@@ -601,11 +601,13 @@ body .sakura {
 
 @media (max-width: 640px) {
   .chooser-screen {
-    padding: 14px;
+    padding: 10px;
+    place-items: start center;
   }
 
   .chooser-brand {
     flex-direction: column;
+    gap: 8px;
   }
 
   .chooser-brand-copy {
@@ -614,7 +616,62 @@ body .sakura {
 
   .chooser-shell {
     border-radius: 28px;
-    padding: 24px 18px;
+    gap: 14px;
+    padding: 16px 14px;
+  }
+
+  .chooser-title {
+    font-size: clamp(2rem, 9vw, 2.8rem);
+  }
+
+  .chooser-copy {
+    font-size: 0.92rem;
+  }
+
+  .chooser-grid {
+    gap: 12px;
+  }
+
+  .chooser-card {
+    gap: 10px;
+    padding: 14px 12px;
+    border-radius: 22px;
+  }
+
+  .chooser-card strong {
+    font-size: 1.02rem;
+  }
+
+  .brand-avatar.large {
+    width: 44px;
+    height: 44px;
+  }
+
+  .chooser-handle {
+    font-size: 0.98rem;
+  }
+
+  .chooser-eyebrow {
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+  }
+
+  .desktop-icon {
+    width: 76px;
+    height: 48px;
+    border-radius: 12px;
+  }
+
+  .desktop-icon::after {
+    bottom: -12px;
+    width: 28px;
+    height: 6px;
+  }
+
+  .mobile-icon {
+    width: 36px;
+    height: 62px;
+    border-radius: 12px;
   }
 
   .header-inner {
