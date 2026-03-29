@@ -85,10 +85,40 @@ const baseSections = [
   },
 ]
 
-function App() {
+function DeviceChooser({ onSelect }) {
+  return (
+    <div className="chooser-screen">
+      <div className="chooser-shell">
+        <p className="chooser-eyebrow">Miss Zhi Personal Profile</p>
+        <h1 className="chooser-title">Choose Your Viewing Mode</h1>
+        <p className="chooser-copy">
+          Open the profile in a full desktop presentation or in a mobile portrait version.
+        </p>
+
+        <div className="chooser-grid">
+          <button type="button" className="chooser-card" onClick={() => onSelect('desktop')}>
+            <span className="chooser-icon desktop-icon" aria-hidden="true"></span>
+            <strong>Desktop</strong>
+            <span>Wide layout, side navigation dots, and alternating gallery spreads.</span>
+          </button>
+
+          <button type="button" className="chooser-card mobile" onClick={() => onSelect('mobile')}>
+            <span className="chooser-icon mobile-icon" aria-hidden="true"></span>
+            <strong>Mobile</strong>
+            <span>Portrait layout with stacked sections, simplified navigation, and mobile-first spacing.</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function SiteExperience({ mode, onChangeMode }) {
+  const isMobileMode = mode === 'mobile'
   const scrollRef = useRef(null)
   const sectionRefs = useRef({})
   const [activeSection, setActiveSection] = useState('hero')
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const sections = useMemo(
     () => [
@@ -103,13 +133,13 @@ function App() {
         text: item.description,
         type: 'artwork',
         src: item.src,
-        layout: index % 2 === 0 ? 'media-left' : 'media-right',
+        layout: isMobileMode ? 'media-stack' : index % 2 === 0 ? 'media-left' : 'media-right',
         order: index + 1,
         theme: index % 2 === 0 ? 'theme-artwork-a' : 'theme-artwork-b',
       })),
       baseSections[3],
     ],
-    [],
+    [isMobileMode],
   )
 
   useEffect(() => {
@@ -150,10 +180,10 @@ function App() {
     if (typeof window === 'undefined' || !window.Sakura) return undefined
 
     const sakura = new window.Sakura('body', {
-      delay: 500,
-      fallSpeed: 1.4,
-      minSize: 10,
-      maxSize: 16,
+      delay: isMobileMode ? 650 : 500,
+      fallSpeed: isMobileMode ? 1.7 : 1.4,
+      minSize: isMobileMode ? 8 : 10,
+      maxSize: isMobileMode ? 13 : 16,
       colors: [
         {
           gradientColorStart: 'rgba(255, 212, 225, 0.9)',
@@ -171,7 +201,7 @@ function App() {
     return () => {
       sakura.stop(true)
     }
-  }, [])
+  }, [isMobileMode])
 
   const handleNavigate = (id) => {
     const targetId = id === 'projects' ? 'projects' : id
@@ -179,10 +209,11 @@ function App() {
       behavior: 'smooth',
       block: 'start',
     })
+    setMobileMenuOpen(false)
   }
 
   return (
-    <div className="app-shell">
+    <div className={`app-shell ${isMobileMode ? 'app-mobile' : 'app-desktop'}`}>
       <header className="site-header">
         <div className="header-inner">
           <div className="brand-mark">
@@ -190,7 +221,31 @@ function App() {
             <span className="brand-name">Cherry Blossom Profile</span>
           </div>
 
-          <nav className="site-nav" aria-label="Primary">
+          {isMobileMode ? (
+            <button
+              type="button"
+              className="mobile-menu-toggle"
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-site-nav"
+              onClick={() => setMobileMenuOpen((open) => !open)}
+            >
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
+          ) : null}
+
+          <nav
+            id={isMobileMode ? 'mobile-site-nav' : undefined}
+            className={
+              isMobileMode
+                ? mobileMenuOpen
+                  ? 'site-nav mobile-open'
+                  : 'site-nav mobile-collapsed'
+                : 'site-nav'
+            }
+            aria-label="Primary"
+          >
             {baseSections.map((section) => (
               <button
                 key={section.id}
@@ -201,32 +256,44 @@ function App() {
                 {section.id === 'projects' ? 'My Gallery' : section.navLabel}
               </button>
             ))}
+            <button
+              type="button"
+              className="nav-link mode-link"
+              onClick={() => {
+                setMobileMenuOpen(false)
+                onChangeMode()
+              }}
+            >
+              Choose View
+            </button>
           </nav>
         </div>
       </header>
 
-      <div className="scroll-dots">
-        {baseSections.map((section) => (
-          <button
-            key={section.id}
-            type="button"
-            className={activeSection === section.id ? 'dot active' : 'dot'}
-            onClick={() => handleNavigate(section.id)}
-            aria-label={
-              section.id === 'projects'
-                ? 'Go to My Gallery section'
-                : `Go to ${section.navLabel} section`
-            }
-          >
-            <span className="dot-label">
-              {section.id === 'projects' ? 'My Gallery' : section.navLabel}
-            </span>
-          </button>
-        ))}
-      </div>
+      {!isMobileMode ? (
+        <div className="scroll-dots">
+          {baseSections.map((section) => (
+            <button
+              key={section.id}
+              type="button"
+              className={activeSection === section.id ? 'dot active' : 'dot'}
+              onClick={() => handleNavigate(section.id)}
+              aria-label={
+                section.id === 'projects'
+                  ? 'Go to My Gallery section'
+                  : `Go to ${section.navLabel} section`
+              }
+            >
+              <span className="dot-label">
+                {section.id === 'projects' ? 'My Gallery' : section.navLabel}
+              </span>
+            </button>
+          ))}
+        </div>
+      ) : null}
 
       <main ref={scrollRef} className="snap-container">
-        {sections.map((section, index) => (
+        {sections.map((section) => (
           <section
             key={section.id}
             id={section.id}
@@ -294,6 +361,16 @@ function App() {
       </main>
     </div>
   )
+}
+
+function App() {
+  const [mode, setMode] = useState(null)
+
+  if (!mode) {
+    return <DeviceChooser onSelect={setMode} />
+  }
+
+  return <SiteExperience mode={mode} onChangeMode={() => setMode(null)} />
 }
 
 export default App
