@@ -18,6 +18,25 @@
   text-align: center;
 }
 
+.chooser-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.chooser-brand-copy {
+  display: grid;
+  gap: 4px;
+  text-align: left;
+}
+
+.chooser-handle {
+  color: var(--text-strong);
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
 .chooser-eyebrow {
   font-size: 0.8rem;
   letter-spacing: 0.28em;
@@ -134,9 +153,31 @@
 }
 
 .brand-mark {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.brand-copy {
   display: grid;
   gap: 2px;
   min-width: 0;
+}
+
+.brand-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(238, 206, 217, 0.92);
+  box-shadow: 0 8px 18px rgba(216, 178, 192, 0.18);
+  flex: 0 0 auto;
+}
+
+.brand-avatar.large {
+  width: 72px;
+  height: 72px;
 }
 
 .brand-kicker {
@@ -563,6 +604,14 @@ body .sakura {
     padding: 14px;
   }
 
+  .chooser-brand {
+    flex-direction: column;
+  }
+
+  .chooser-brand-copy {
+    text-align: center;
+  }
+
   .chooser-shell {
     border-radius: 28px;
     padding: 24px 18px;
@@ -625,6 +674,11 @@ body .sakura {
 
 .app-mobile .brand-name {
   font-size: 1.45rem;
+}
+
+.app-mobile .brand-avatar {
+  width: 38px;
+  height: 38px;
 }
 
 .app-mobile .mobile-menu-toggle {

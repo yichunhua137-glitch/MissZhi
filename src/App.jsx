@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import './App.css'
 
+const logoSrc = '/logo.jpg'
+
 const galleryItems = [
   {
     src: '/ARTS/Weixin%20Image_20260321160559_7618_465.jpg',
@@ -89,7 +91,13 @@ function DeviceChooser({ onSelect }) {
   return (
     <div className="chooser-screen">
       <div className="chooser-shell">
-        <p className="chooser-eyebrow">Miss Zhi Personal Profile</p>
+        <div className="chooser-brand">
+          <img src={logoSrc} alt="Miss Zhi portrait" className="brand-avatar large" />
+          <div className="chooser-brand-copy">
+            <span className="chooser-handle">misszhi</span>
+            <p className="chooser-eyebrow">Miss Zhi Personal Profile</p>
+          </div>
+        </div>
         <h1 className="chooser-title">Choose Your Viewing Mode</h1>
         <p className="chooser-copy">
           Open the profile in a full desktop presentation or in a mobile portrait version.
@@ -217,8 +225,11 @@ function SiteExperience({ mode, onChangeMode }) {
       <header className="site-header">
         <div className="header-inner">
           <div className="brand-mark">
-            <span className="brand-kicker">MISS ZHI</span>
-            <span className="brand-name">Cherry Blossom Profile</span>
+            <img src={logoSrc} alt="Miss Zhi portrait" className="brand-avatar" />
+            <div className="brand-copy">
+              <span className="brand-kicker">MISS ZHI</span>
+              <span className="brand-name">Cherry Blossom Profile</span>
+            </div>
           </div>
 
           {isMobileMode ? (
